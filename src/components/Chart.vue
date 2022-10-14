@@ -34,7 +34,6 @@ export default {
   methods: {
     generateData() {
       let state = {...this.stocks}
-      console.log(state)
       this.chartData = {
         labels: Object.keys(state),
         datasets: [
