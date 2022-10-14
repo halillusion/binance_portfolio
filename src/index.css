@@ -97,7 +97,7 @@ body {
 }
 
 .modal .modal-content .modal-content--close {
-  @apply absolute -top-5 -right-5 p-2 cursor-pointer bg-amber-400 rounded-full hover:bg-neutral-900 transition-all duration-150;
+  @apply absolute p-1 top-[-2.1rem] right-1  rounded-t-full md:-top-5 md:-right-5 md:p-2 cursor-pointer bg-amber-400 md:rounded-full hover:bg-neutral-900 transition-all duration-150;
 }
 
 .market-items {
@@ -105,7 +105,7 @@ body {
 }
 
 .market-items .market-items-item {
-  @apply flex flex-row justify-between items-center border-b border-b-neutral-800/50 py-2 px-4 bg-neutral-700 mb-2 rounded-lg hover:bg-neutral-800 transition-all duration-150;
+  @apply flex flex-row justify-between items-center border-b border-b-neutral-800/50 py-1 px-2 md:py-2 md:px-4 bg-neutral-700 mb-2 rounded-lg hover:bg-neutral-800 transition-all duration-150;
 }
 
 .market-items .market-items-item .market-items-item--name {
@@ -144,11 +144,11 @@ body {
 }
 
 .market-items .market-items-item .market-items-item--actions .market-items-item--actions-btns {
-  @apply w-[8rem] lg:w-[12rem] flex flex-row justify-between items-center;
+  @apply w-[8rem] lg:w-[12rem] flex flex-col md:flex-row justify-between items-center;
 }
 
 .market-items .market-items-item .market-items-item--actions .market-items-item--actions-btns .btn {
-  @apply flex-1;
+  @apply flex-1 w-full;
 }
 
 .copyright {
