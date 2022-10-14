@@ -27,7 +27,7 @@ export default {
     }
   },
   created() {
-    this.search()
+    this.search();
   },
   methods: {
     search() {

@@ -135,14 +135,18 @@ body {
   @apply rotate-180;
 }
 
-.market-items .market-items-item .market-items-item--qty {
-  @apply w-[8rem] ml-auto mr-2;
+.market-items .market-items-item .market-items-item--actions {
+  @apply flex flex-row justify-start items-center;
 }
 
-.market-items .market-items-item .market-items-item--qty {
-  @apply w-[8rem] flex flex-row justify-between items-center;
+.market-items .market-items-item .market-items-item--actions input {
+  @apply w-32 mr-2 bg-neutral-900/20 text-neutral-100 rounded-lg px-4 py-2 outline-none focus:bg-neutral-900;;
 }
 
-.market-items .market-items-item .market-items-item--qty .btn {
+.market-items .market-items-item .market-items-item--actions .market-items-item--actions-btns {
+  @apply w-[12rem] flex flex-row justify-between items-center;
+}
+
+.market-items .market-items-item .market-items-item--actions .market-items-item--actions-btns .btn {
   @apply flex-1;
 }

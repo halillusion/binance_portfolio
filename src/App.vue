@@ -7,8 +7,7 @@
     </div>
     <div class="portfolio-box-body">
       <div class="portfolio-box-body--list">
-        <MarketItems @forceUpdate="forceUpdate" v-if="Object.keys(stocks).length" :items="stocks" />
-        <p v-else>No stocks added yet.</p>
+        <MarketItems :fromStock="true" />
       </div>
       <div class="portfolio-box-body--chart">
         <Chart :chartData="chartData" />
@@ -46,39 +45,38 @@ export default {
     ...mapActions(["fetchMarket"]),
     toggleModal() {
       this.modalOpened = !this.modalOpened;
+      this.$forceUpdate();
     },
     async init() {
       this.loading = true
-      await this.fetchMarket();
+      await this.fetchMarket()
       this.loading = false
-      this.forceUpdate()
     },
-    forceUpdate() {
-      this.$forceUpdate();
-    },
-    generateColorCode() {
-      return '#' + Math.floor(Math.random()*16777215).toString(16);
-    }
   },
   computed: {
     ...mapGetters(["market", "stocks"]),
     chartData: function() {
 
-      let colors = [];
-      for (let i = 0; i < Object.keys(this.stocks).length; i++) {
-        colors.push(this.generateColorCode());
-      }
-
       return {
         labels: Object.keys(this.stocks),
         datasets: [
           {
-            backgroundColor: colors,
+            backgroundColor: Object.values(this.stocks).map(stock => stock.color),
             data: Object.values(this.stocks).map(stock => stock.qty)
           }
         ]
       }
     }
   },
+  watch: {
+    modalOpened: function() {
+      // this.compKey++;
+      // this.$forceUpdate();
+    },
+    chartData: function() {
+      // this.compKey++;
+      // this.$forceUpdate()
+    }
+  }
 }
 </script>
