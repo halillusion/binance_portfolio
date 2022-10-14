@@ -150,3 +150,11 @@ body {
 .market-items .market-items-item .market-items-item--actions .market-items-item--actions-btns .btn {
   @apply flex-1;
 }
+
+.copyright {
+  @apply flex flex-row justify-center items-center;
+}
+
+.copyright a {
+  @apply text-center inline-block text-zinc-800 hover:text-zinc-50 mx-2 text-sm transition-all duration-150 hover:drop-shadow-[0_0_1px_rgba(255,255,255,0.50)];
+}

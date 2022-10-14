@@ -14,6 +14,10 @@
       </div>
     </div>
     <Modal :key="refreshKey" @toggle="toggleModal" :class="modalOpened ? 'opened' : ''" />
+    <div class="copyright">
+      <a target="_blank" href="https://github.com/halillusion/binance_portfolio">Github</a>
+      <a target="_blank" href="https://github.com/halillusion">Other Projects</a>
+    </div>
   </main>
 </template>
 <script>
