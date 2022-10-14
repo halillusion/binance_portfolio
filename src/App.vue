@@ -7,36 +7,36 @@
     </div>
     <div class="portfolio-box-body">
       <div class="portfolio-box-body--list">
-        <MarketItems :fromStock="true" />
+        <StockItems :key="refreshKey" @forceUpdate="forceUpdate" />
       </div>
       <div class="portfolio-box-body--chart">
-        <Chart :chartData="chartData" />
+        <Chart />
       </div>
     </div>
-    <Modal @toggle="toggleModal" :class="modalOpened ? 'opened' : ''" />
+    <Modal :key="refreshKey" @toggle="toggleModal" :class="modalOpened ? 'opened' : ''" />
   </main>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
-
+import { mapActions } from "vuex";
 import Chart from './components/Chart.vue'
 import Modal from './components/Modal.vue'
-import MarketItems from './components/MarketItems.vue'
+import StockItems from './components/StockItems.vue'
 export default {
   name: "App",
-  components: { Chart, Modal, MarketItems },
+  components: { Chart, Modal, StockItems },
   name: 'Portfolio',
   data() {
     return {
       modalOpened: false,
       loading: false,
+      refreshKey: 0,
     }
   },
   created() {
     this.init()
     setInterval(() => {
       this.init()
-    }, 1200000);
+    }, 1200000);  // 20 minutes
   },
   beforeMount() {
     this.$store.commit('INIT_STOCKS')
@@ -45,38 +45,16 @@ export default {
     ...mapActions(["fetchMarket"]),
     toggleModal() {
       this.modalOpened = !this.modalOpened;
-      this.$forceUpdate();
+      this.refreshKey++;
     },
     async init() {
       this.loading = true
       await this.fetchMarket()
       this.loading = false
     },
-  },
-  computed: {
-    ...mapGetters(["market", "stocks"]),
-    chartData: function() {
-
-      return {
-        labels: Object.keys(this.stocks),
-        datasets: [
-          {
-            backgroundColor: Object.values(this.stocks).map(stock => stock.color),
-            data: Object.values(this.stocks).map(stock => stock.qty)
-          }
-        ]
-      }
-    }
-  },
-  watch: {
-    modalOpened: function() {
-      // this.compKey++;
-      // this.$forceUpdate();
+    forceUpdate() {
+      this.refreshKey++;
     },
-    chartData: function() {
-      // this.compKey++;
-      // this.$forceUpdate()
-    }
-  }
+  },
 }
 </script>

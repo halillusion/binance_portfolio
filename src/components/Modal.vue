@@ -8,8 +8,7 @@
           <path d="M15.3444 15.4079L9.10938 9.17285" stroke="#CC2C00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <input type="text" v-model="symbol" placeholder="Search...">
-      <MarketItems :items="results" />
+      <MarketItems />
     </div>
   </div>
 </template>
@@ -20,24 +19,5 @@ import MarketItems from './MarketItems.vue'
 export default {
   name: 'Modal',
   components: { MarketItems },
-  data() {
-    return {
-      results: [],
-      symbol: '',
-    }
-  },
-  created() {
-    this.search();
-  },
-  methods: {
-    search() {
-      this.results = this.$store.state.market.filter(stock => stock.symbol.includes(this.symbol.toUpperCase()));
-    }
-  },
-  watch: {
-    symbol() {
-      this.search()
-    }
-  }
 }
 </script>

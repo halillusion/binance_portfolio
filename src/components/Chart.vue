@@ -1,18 +1,9 @@
 <template>
-  <Pie
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <Pie :chart-data="chartData" :chart-options="{responsive: true, maintainAspectRatio: false}" :dataset-id-key="'label'" :width="400" :height="400" />
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { Pie } from 'vue-chartjs/legacy'
 
 import {
@@ -31,47 +22,41 @@ export default {
   components: {
     Pie
   },
-  props: {
-    chartId: {
-      type: String,
-      default: 'pie-chart'
-    },
-    datasetIdKey: {
-      type: String,
-      default: 'label'
-    },
-    width: {
-      type: Number,
-      default: 400
-    },
-    height: {
-      type: Number,
-      default: 400
-    },
-    cssClasses: {
-      default: '',
-      type: String
-    },
-    styles: {
-      type: Object,
-      default: () => {}
-    },
-    plugins: {
-      type: Array,
-      default: () => []
-    },
-    chartData: {
-      type: Object,
-      default: () => {}
-    },
-  },
   data() {
     return {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
+      },
+      chartData: {}
+    }
+  },
+  methods: {
+    generateData() {
+      let state = {...this.stocks}
+      console.log(state)
+      this.chartData = {
+        labels: Object.keys(state),
+        datasets: [
+          {
+            backgroundColor: Object.values(state).map(stock => stock.color),
+            data: Object.values(state).map(stock => stock.qty)
+          }
+        ]
       }
     }
+  },
+  computed: {
+    ...mapGetters(["stocks"])
+  },
+  created() {
+    this.generateData()
+  },
+  mounted() {
+    setInterval(this.generateData, 1000);
+  },
+  watchEffect() {
+    this.generateData()
   }
 }
 </script>

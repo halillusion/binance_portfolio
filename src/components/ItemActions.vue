@@ -27,7 +27,7 @@ export default {
   },
   created() {
     if (typeof this.stocks !== 'undefined' && typeof this.stocks[this.item.symbol] !== 'undefined' && typeof this.stocks[this.item.symbol].qty !== 'undefined') {
-      this.qty = this.stocks[this.item.symbol].qty;
+      this.qty = this.stocks[this.item.symbol].qty
     }
   },
   computed: {
@@ -36,18 +36,27 @@ export default {
   methods: {
     ...mapActions(["setStock", "deleteStock"]),
     addStock(item) {
-      this.setStock({
+
+      let stockData = {
         symbol: item.symbol, 
         qty: parseInt(this.qty),
         lastPrice: item.lastPrice,
         openPrice: item.openPrice,
-        color: '#' + Math.floor(Math.random() * 16777215).toString(16)
-      });
-      this.$forceUpdate();
+        color: this.stocks[this.item.symbol] !== undefined ? this.stocks[this.item.symbol].color : '#' + Math.floor(Math.random() * 16777215).toString(16)
+      }
+
+      if (this.stocks[this.item.symbol] === undefined || JSON.stringify(this.stocks[this.item.symbol]) !== JSON.stringify(stockData)) {
+        this.setStock(stockData)
+        this.forceUpdate()
+      }
     },
     removeStock(item) {
-      this.deleteStock({symbol: item.symbol});
-      this.$forceUpdate();
+      this.deleteStock({symbol: item.symbol})
+      this.forceUpdate()
+    },
+    forceUpdate(rerender = false) {
+      this.$forceUpdate()
+      this.$emit('forceUpdate', rerender)
     }
   }
 };

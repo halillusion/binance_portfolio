@@ -1,8 +1,7 @@
 <template>
   <div>
-    <input type="text" v-model="symbol" placeholder="Search...">
-    <ul class="market-items">
-      <li v-for="item in results" :key="item.symbol" class="market-items-item">
+    <ul class="market-items stocks">
+      <li v-for="item in stocks" :key="item.symbol" class="market-items-item">
         <div class="market-items-item--name">
           <span>{{ item.symbol }}</span>
           <span class="market-item--price--change" :class="item.lastPrice > item.openPrice ? 'up' : 'down'">
@@ -23,38 +22,21 @@ import ItemActions from './ItemActions.vue'
 import { mapGetters } from "vuex";
 
 export default {
-  name: "MarketItems",
+  name: "StockItems",
   components: { ItemActions },
   data() {
     return {
-      results: [],
-      symbol: '',
     }
   },
-  created() {
-    this.results = this.market.slice(0, 10);
-  },
   computed: {
-    ...mapGetters(["market"]),
-  },
-  props: {
-    keyword: {
-      type: String,
-      default: '',
-    },
+    ...mapGetters(["stocks"]),
   },
   methods: {
     forceUpdate() {
       this.$emit('forceUpdate')
     },
-    search() {
-      this.results = this.market.filter(stock => stock.symbol.includes(this.symbol.toUpperCase())).slice(0, 10);
-    }
   },
   watch: {
-    symbol() {
-      this.search()
-    }
   }
 };
 </script>
